@@ -1,0 +1,6 @@
+
+.idea/*
+.idea/*.xml
+.idea/*.iml
+schemas.xlsx
+~$schemas.xlsx
