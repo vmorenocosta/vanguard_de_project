@@ -3,7 +3,7 @@
 ## Overview
 Congratulations for making it this far in the interview process for the Vanguard Apprenticeship at Onramp!
 
-This project seeks to better inform the the Onramp team of your Data Engineering skill set - specifically in regards to data ingestion, transformation, storage, and analytics.  It will also help prepare you for your interview with Vanguard by mimicking a Data Engineering use case.  You will have until <due_date> to complete this project.  The expected duration for this project is 30 hours (this time could vary based on your experience level, but this project should be a significant effort for all candidates).  If you are lacking in certain skills required, it may take you longer so please plan accordingly.
+This project seeks to better inform the the Onramp team of your Data Engineering skill set - specifically in regards to data ingestion, transformation, storage, and analytics.  It will also help prepare you for your interview with Vanguard by mimicking a Data Engineering use case.  You will have until 7pm PT on Thursday, September 29 to complete this project.  The expected duration for this project is 30 hours (this time could vary based on your experience level, but this project should be a significant effort for all candidates).  If you are lacking in certain skills required, it may take you longer so please plan accordingly.
 
 ### Description
 You will be tasked with ingestion, transformation, storage, and analytics of Spotify data.  You will pick 20 of your favorite musicians / artists and pull data using Python from the Spotify API for them including artist info, albums, and songs.  You will be storing this data in a SQLite database on your local machine.  Once the data is stored into tables, you will create views in order to join the data together and make it useful for analytics.
@@ -114,6 +114,7 @@ You will submit all deliverables via Github in the `submissions` folder.  If you
     * The data should be cleaned, in the expected schema, deduplicated, and relatively free of nulls (some nulls may exist in the dataset within reason).
     * As mentioned above, you should have at least 1000 rows in your `track` and `track_feature` tables.
 3. A pdf called `visualization.pdf` file containing images of your 3 data visualizations you created in Python.
+4. Once you have completed your Github files, you will submit the link to your public repository on your Onramp dashboard. There will be a field for your Github link and a field for your deployed project. Please drop the link to your visualization.pdf in the deployed project data field. Your project will not be considered submitted until you submit on the Onramp dashboard so please do not skip this important step!
 
 ## Environment Setup / Prerequisites
 
