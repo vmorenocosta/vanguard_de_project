@@ -111,10 +111,41 @@ You will submit all deliverables via Github in the `submissions` folder.  If you
 2. A SQLite .db file which will contain a database called `spotify.db`
     * This file should contain the following tables: `artist`, `album`, `track`, and `track_feature`.
     * This file should contain 5 views, including 3 from the prompt above and 2 that you come up with yourself.
-    * The data should be cleaned, in the expected schema, deduplicated, and relatively free of nulls (some nulls may exist in the dataset within reason).
-    * As mentioned above, you should have at least 1000 rows in your `track` and `track_feature` tables.
 3. A pdf called `visualization.pdf` file containing images of your 3 data visualizations you created in Python.
 4. Once you have completed your Github files, you will submit the link to your public repository on your Onramp dashboard. There will be a field for your Github link and a field for your deployed project. Please drop the link to your visualization.pdf in the deployed project data field. Your project will not be considered submitted until you submit on the Onramp dashboard so please do not skip this important step!
+
+## Grading Criteria
+You will be judged on the following high level criteria:
+* Inclusion of required files in the `submissions` folder:
+    - python code for api calls
+    - python code for transformations
+    - python code for visualizations
+    - `visualization.pdf` 
+    - `spotify.db` file
+    - `readme.md` containing a few paragraphs explaining each file does and how it works.
+* Completness of Ingestion Code:
+    - Contains python code that is accessing the Spotify API in some automated way (they didn't just manually get the data somehow and do everything in Excel)
+    - Any needed data transformations are happening in Python
+    - All code files will run without errors if we try to run them ourselves
+* Completness of Database (`spotify.db`):
+    - Contains the 4 required tables (as specified above)
+    - Contains at least 5 views (as specified above)
+    - All views will run without any errors or significant performance issues
+* Organization and Clarity
+    - Python and SQL code should be well formatted and contain comments
+    - Code should also make sense, be readable, and use functions when appropriate to reduce redundancy of code
+    - `readme.md` should be clear and thorough enough so that your code is easy to understand
+* Data Completeness & Quality
+    - Track tables should contain over 1000 rows (as mentioned above)
+    - The data should be cleaned, in the expected schema, deduplicated, and relatively free of nulls (some nulls may exist in the dataset within reason).
+* Completeness of Visualizations
+    - `visualization.pdf` should be well formatted and presentable within a professional setting
+    - Visualizations should help provide some useful insight or clarity into the data in a way that makes it more accessible.
+* Level of Effort
+    - Project will be graded on the amount of time and effort it appears that was put into your project
+    - Higher points can be given for going above and beyond in terms of quality and effort
+    - Lower points will be given if only minimum effort and output is apparent
+    - Keep in mind the benchmark of 20-30 hours
 
 ## Environment Setup / Prerequisites
 
