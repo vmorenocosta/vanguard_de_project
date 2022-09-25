@@ -2,6 +2,7 @@ import spotipy
 import sys
 from spotipy.oauth2 import SpotifyClientCredentials
 import pprint
+import os
 
 """
     Make sure you have the following environment variables set:
