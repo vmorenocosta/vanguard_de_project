@@ -20,11 +20,11 @@ def build_artist_table(artists: list, spotify: spotipy.client.Spotify):
     """Returns a dataframe of artist information for each artist in the list of artists"""
     artist_tables = []
     for artist in artists:
-        artist_tables.append(return_artist_info(artist, spotify))
+        artist_tables.append(_return_artist_info(artist, spotify))
     return pd.DataFrame(artist_tables)
 
 
-def return_artist_info(artist: str, spotify: spotipy.client.Spotify):
+def _return_artist_info(artist: str, spotify: spotipy.client.Spotify):
     """Returns a dictionary of artist information from Spotify API.
     If there are multiple genres or images, it chooses the first option."""
     name = artist.lower()
@@ -49,24 +49,24 @@ def return_artist_info(artist: str, spotify: spotipy.client.Spotify):
 
 ### Album
 
-def build_album_table(artists_table: pd.DataFrame, remove_albums_with_keyword: str, spotify: spotipy.client.Spotify):
+def build_album_table(artists_table: pd.DataFrame, remove_albums_with_keyword: [str], spotify: spotipy.client.Spotify):
     """Returns a dataframe of all albums for the artists in the given artists_table,
     which was generate using build_artist_table function."""
     for i in artists_table.index:
         artist_uri = artists_table.loc[i, "artist_uri"]
         artist_id = artists_table.loc[i, "artist_id"]
-        artist_album_table = return_artist_album_table(artist_uri, artist_id, spotify)
+        artist_album_table = _return_artist_album_table(artist_uri, artist_id, spotify)
         if i == 0:
             album_table = artist_album_table
         else:
             album_table = pd.concat([album_table, artist_album_table]).reset_index(
                 drop=True
             )
-    album_table = return_unique_albums(album_table, remove_albums_with_keyword)
+    album_table = _return_unique_albums(album_table, remove_albums_with_keyword)
     return album_table
 
 
-def return_artist_album_table(artist_uri: str, artist_id: str, spotify: spotipy.client.Spotify):
+def _return_artist_album_table(artist_uri: str, artist_id: str, spotify: spotipy.client.Spotify):
     """Returns a dataframe of album(s) information for a given artist uri from Spotify API"""
     results = spotify.artist_albums(
         artist_id=artist_uri, album_type="album", country="US"
@@ -76,11 +76,11 @@ def return_artist_album_table(artist_uri: str, artist_id: str, spotify: spotipy.
         raise Exception("No albums found")
     albums_table = []
     for album in items:
-        albums_table.append(return_album_info(album, artist_id))
+        albums_table.append(_return_album_info(album, artist_id))
     return pd.DataFrame(albums_table)
 
 
-def return_album_info(album: dict, artist_id: str):
+def _return_album_info(album: dict, artist_id: str):
     """Returns a dictionary of album information from the provided artist item from the Spotify API file"""
     album_table = {
         "album_id": album["id"],
@@ -96,7 +96,7 @@ def return_album_info(album: dict, artist_id: str):
     return album_table
 
 
-def return_unique_albums(album_table: pd.DataFrame, keywords_to_remove_album: str):
+def _return_unique_albums(album_table: pd.DataFrame, keywords_to_remove_album: [str]):
     """Returns album_table dataframe that includes only the earliest available version of an album and excludes those with a keyword provided,
     for example it excludes tour or live concerts, or deluxe albums if an earlier album is available"""
     album_table.sort_values("release_date", ascending=True, inplace=True)
@@ -134,7 +134,7 @@ def build_track_table(album_table: pd.DataFrame, spotify: spotipy.client.Spotify
     which was generate using build_album_table."""
     for i in album_table.index:
         album_id = album_table.loc[i, "album_id"]
-        album_tracks_table = return_album_tracks(album_id, spotify)
+        album_tracks_table = _return_album_tracks(album_id, spotify)
         if i == 0:
             tracks_table = album_tracks_table
         else:
@@ -143,7 +143,7 @@ def build_track_table(album_table: pd.DataFrame, spotify: spotipy.client.Spotify
     return tracks_table.reset_index(drop=True)
 
 
-def return_album_tracks(album_id: str, spotify: spotipy.client.Spotify):
+def _return_album_tracks(album_id: str, spotify: spotipy.client.Spotify):
     """Returns a dataframe of album tracks for a given album_id using Spotify API"""
     results = spotify.album_tracks(album_id=album_id, limit=50, offset=0)
     items = results["items"]
@@ -151,11 +151,11 @@ def return_album_tracks(album_id: str, spotify: spotipy.client.Spotify):
         raise Exception("No tracks found")
     tracks_table = []
     for track in items:
-        tracks_table.append(return_track_info(track, album_id))
+        tracks_table.append(_return_track_info(track, album_id))
     return pd.DataFrame(tracks_table)
 
 
-def return_track_info(track: dict, album_id: str):
+def _return_track_info(track: dict, album_id: str):
     """Returns a dictionary of track information from the provided track item from the Spotify API results item"""
     track_table = {
         "track_id": track["id"],
@@ -179,7 +179,7 @@ def build_track_feature_table(track_table: pd.DataFrame, spotify: spotipy.client
     hundreds_of_tracks = math.ceil(track_table.shape[0] / 100)
     for i in range(0, hundreds_of_tracks):
         track_ids = track_table.loc[(i * 100) : ((i + 1) * 100) - 1, "track_id"]
-        new_track_feature_table = return_track_feature_table(track_ids, spotify)
+        new_track_feature_table = _return_track_feature_table(track_ids, spotify)
         if i == 0:
             track_feature_table = new_track_feature_table
         else:
@@ -189,18 +189,18 @@ def build_track_feature_table(track_table: pd.DataFrame, spotify: spotipy.client
     return track_feature_table.reset_index(drop=True)
 
 
-def return_track_feature_table(track_ids: list, spotify: spotipy.client.Spotify):
+def _return_track_feature_table(track_ids: list, spotify: spotipy.client.Spotify):
     """Returns a dataframe of track features from a given list of track_ids using Spotify API"""
     results = spotify.audio_features(track_ids)
     if len(results) == 0:
         raise Exception("No tracks found")
     tracks_table = []
     for track_id, track in zip(track_ids, results):
-        tracks_table.append(return_track_feature_info(track, track_id))
+        tracks_table.append(_return_track_feature_info(track, track_id))
     return pd.DataFrame(tracks_table)
 
 
-def return_track_feature_info(track: dict, track_id: str):
+def _return_track_feature_info(track: dict, track_id: str):
     """Returns a dictionary of track feature information for a given track_id from results of a Spotipy API results item"""
     if track is None:
         keys = [
@@ -240,18 +240,18 @@ def store_tables_in_db(table_names: [str], tables: [pd.DataFrame], db: str):
     conn = sqlite3.connect(f"../{db}.db")
     c = conn.cursor()
     for table_name, table in zip(table_names, tables):
-        insert_table(table_name, table, c, conn)
+        _insert_table(table_name, table, c, conn)
 
-def insert_table(
+def _insert_table(
     table_name: str, table: pd.DataFrame, c: sqlite3.Cursor, conn: sqlite3.Connection
 ):
     """Inserts table referred by table_Name into the databased in the sqlite3 connection"""
-    col_dtypes = translate_columns_dtypes(table)
+    col_dtypes = _translate_columns_dtypes(table)
     c.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} ({col_dtypes})""")
     table.to_sql(table_name, conn, if_exists="replace", index=False)
     print(f'{table_name} inserted into db')
 
-def translate_columns_dtypes(table):
+def _translate_columns_dtypes(table):
     """Returns a str version of a list of column names and their sqlite3 data types 
     based on the pandas datatype of each column in the table"""
     col_dtypes = []
