@@ -9,6 +9,28 @@ The python scripts and functions in the code folder ingest, transform, store, an
 ## Source
 The project collects 20 artists, 132 albums, and approximately 2000 songs and their features using [Spotipy API](https://spotipy.readthedocs.io/en/master/#). 
 
+Artists:
+    "Taylor Swift",
+    "Shakira",
+    "Phil Collins",
+    "Billie Eilish",
+    "Camilo",
+    "Bad Bunny",
+    "Harry Styles",
+    "Sublime",
+    "Eric Clapton",
+    "Lizzo",
+    "Adele",
+    "Maroon 5",
+    "Ed Sheeran",
+    "Enrique Iglesias",
+    "Coldplay",
+    "Lady Gaga",
+    "Beyonce",
+    "Britney Spears",
+    "Queen",
+    "Eagles"
+
 ---
 ## Overview of Code
 Code Structure:
@@ -18,24 +40,24 @@ Code Structure:
     1. Extract and transform tables using the following functions:
         - artist:
             - build_artist_table - Aggregates information for each artist in pandas dataframe
-            - return_artist_info - API call and JSON extraction
+            - _return_artist_info - API call and JSON extraction
         - album:
             - build_album_table - Aggregates albums in pandas dataframe for each artist 
-            - return_artist_album_table - API call to obtain albums of an artist and aggregates albums in pandas dataframe
-            - return_album_info - JSON extraction
-            - return_unique_albums - Returns album_table dataframe that includes only the earliest available version of an album and excludes those whose name contains a keyword provided
+            - _return_artist_album_table - API call to obtain albums of an artist and aggregates albums in pandas dataframe
+            - _return_album_info - JSON extraction
+            - _return_unique_albums - Returns album_table dataframe that includes only the earliest available version of an album and excludes those whose name contains a keyword provided
         - track:
             - build_track_table - Aggregates tracks in pandas dataframe for each album
-            - return_album_tracks - API call to obtain tracks of an album and aggregates tracks in pandas dataframe
-            - return_track_info - JSON extraction
+            - _return_album_tracks - API call to obtain tracks of an album and aggregates tracks in pandas dataframe
+            - _return_track_info - JSON extraction
         - track_feature:
             - build_track_feature_table: Aggregates track_feature in pandas dataframe for each track
-            - return_track_feature_table - API call to obtain track_feature of a track and aggregates track_features in pandas dataframe
-            - return_track_feature_info - JSON extraction
+            - _return_track_feature_table - API call to obtain track_feature of a track and aggregates track_features in pandas dataframe
+            - _return_track_feature_info - JSON extraction
     2. Load tables into spotify.db using the following functions:
         - store_tables_in_db: iterates through tables to store in db
-        - insert_table: contains query to create and insert table in db
-        - translate_columns_dtypes: returns the table names and data types for inserting table
+        - _insert_table: contains query to create and insert table in db
+        - _translate_columns_dtypes: returns the table names and data types for inserting table
     3. Add 5 views to spotify.db using the following function:
         - add_view: adds a view based on the provided query to the db
 - **script_visualizations.py**
@@ -45,21 +67,31 @@ Code Structure:
         - plot_spotify_bar - creates and saves a bar graph of the provided information
         - plot_spotify_time - creates and saves a time-series plot of the provided information
 ---
+## How to recreate output
+Ensure that dependencies from requirements.txt are installed/compatible.
+Run the code below to recreate the output (assuming your working directory is submission).
+```
+cd code
+python script_data_ETL.py
+python script_visualizations.py
+```
+---
     
 ## Directory Structure
 ```
 submission
-|__spotify.db
 |__code
 |   |__functions.py
 |   |__script_data_ETL.py
 |   |__script_visualizations.py
-|__notebooks **IGNORE**
+|__notebooks **IGNORE** (internal use of jupyter notebooks to craft code)
 |__visualizations
 |   |__lady_gaga_albums_by_mean_song_energy_over_time.png
 |   |__lady_gaga_albums_by_mean_song_energy.png
 |   |__top_1_album_by_artist_by_mean_song_energy.png
 |   |__top_songs_by_artist_by_duration.png
+|__readme.md
+|__requirements.txt
+|__spotify.db
 |__visualizations.pdf
-|__README.md
 ```
