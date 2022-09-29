@@ -6,3 +6,5 @@ schemas.xlsx
 ~$schemas.xlsx
 .env
 *.csv
+.cache
+__pycache__
